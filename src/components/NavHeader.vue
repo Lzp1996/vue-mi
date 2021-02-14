@@ -9,9 +9,10 @@
             <a href="javascript:;">协议规则</a>
           </div>
           <div class="topbar-user">
-            <a href="javascript:;" >登录</a>
-            <a href="/#/order/list" >我的订单</a>
-            <a href="javascript:;" class="my-cart" ><span class="icon-cart"></span>购物车</a>
+            <a href="/#/login" v-if="!username">登录</a>
+            <a href="/#/login" v-if="username">{{username}}</a>
+            <a href="/#/order/list" v-if="username">我的订单</a>
+            <a href="javascript:;" class="my-cart" ><span class="icon-cart"></span>购物车{{cartCount}}</a>
           </div>
         </div>
       </div>
@@ -19,7 +20,7 @@
        <div class="container">
          <div class="nav-logo">
             <div class="wrapper">
-              <a href="javascript;"></a>
+              <a href="javascript:;"></a>
             </div>
          </div>
          <div class="nav-menu">
@@ -63,6 +64,14 @@ export default {
       productList: []
     }
   },
+  computed: {
+    username () {
+      return this.$store.state.username
+    },
+    cartCount () {
+      return this.$store.state.cartCount
+    }
+  },
   filters: {
     currentcy (val) {
       if (!val) return '0.00'
@@ -74,7 +83,6 @@ export default {
       this.axios.get('/products', {
         categoryId: '100012'
       }).then(res => {
-        console.log(res)
         this.productList = res.list.slice(4, 10)
       })
     }
@@ -192,7 +200,7 @@ export default {
               box-shadow: 0 7px 6px rgba(0, 0, 0, .3);
               background: white;
               transition: all .3s;
-              z-index: 10;
+              z-index: 100;
               .product {
                 position: relative;
                 float: left;
