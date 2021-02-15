@@ -5,7 +5,9 @@ import store from './store'
 import axios from 'axios'
 import VueCookie from 'vue-cookie'
 import VueAxios from 'vue-axios'
+import { Message } from 'element-ui'
 import './assets/scss/reset.scss'
+
 import VueLazyLoad from 'vue-lazyload'
 axios.defaults.baseURL = '/api'
 axios.defaults.timeout = 8000
@@ -30,11 +32,12 @@ axios.interceptors.response.use(function (response) {
 
 Vue.use(VueAxios, axios)
 Vue.use(VueCookie)
+Vue.use(Message)
 Vue.use(VueLazyLoad, {
   loading: '/imgs/loading-svg/loading-bars.svg'
 })
 Vue.config.productionTip = false
-
+Vue.prototype.$message = Message
 new Vue({
   router,
   store,
